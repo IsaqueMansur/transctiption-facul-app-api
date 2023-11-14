@@ -3,6 +3,7 @@ import { resolve } from "path";
 import express from "express";
 import { useExpressServer } from "routing-controllers";
 import "reflect-metadata";
+import bodyParser from "body-parser";
 dotenv.config();
 
 class App {
@@ -15,6 +16,7 @@ class App {
   }
 
   middlewares() {
+    this.app.use(bodyParser.json({ limit: "200mb" }));
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
     this.app.use(express.static(resolve(__dirname, "uploads", "images")));
