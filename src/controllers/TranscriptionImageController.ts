@@ -2,23 +2,17 @@ import {
   Body,
   Get,
   JsonController,
-  Middleware,
   Post,
   UseBefore,
 } from "routing-controllers";
 import { ITranscriptionProtocl } from "../interfaces/ITranscription";
 import axios from "axios";
-import { MiddlewareTokenRequired } from "../middleware";
+//import middleware
 
 @JsonController("/main")
 export class TranscriptionImageController {
-  @Get("/")
-  async test() {
-    return { msg: "tudo certo" };
-  }
-
   @Post("/transcription")
-  @UseBefore(MiddlewareTokenRequired)
+  //middleware
   async HandleTranscription(
     @Body() { imageDataBase64 }: ITranscriptionProtocl
   ) {
@@ -40,7 +34,6 @@ export class TranscriptionImageController {
           ],
         }
       );
-      console.log(data.responses[0]);
       return {
         textTranscreved: data.responses[0].textAnnotations[0].description,
       };
