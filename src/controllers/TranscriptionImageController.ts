@@ -7,12 +7,12 @@ import {
 } from "routing-controllers";
 import { ITranscriptionProtocl } from "../interfaces/ITranscription";
 import axios from "axios";
-//import middleware
+import MiddlewareTokenRequired from "../Middleware";
 
 @JsonController("/main")
 export class TranscriptionImageController {
   @Post("/transcription")
-  //middleware
+  @UseBefore(MiddlewareTokenRequired)
   async HandleTranscription(
     @Body() { imageDataBase64 }: ITranscriptionProtocl
   ) {
